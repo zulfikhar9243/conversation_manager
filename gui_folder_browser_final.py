@@ -4,34 +4,33 @@ from tkinter import filedialog, ttk, messagebox
 import pyperclip
 
 class FolderBrowserApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Folder Browser")
-
-        self.frame = tk.Frame(root)
+    def __init__(self, parent):
+        self.root = parent
+        
+        self.frame = tk.Frame(self.root)
         self.frame.pack(fill=tk.BOTH, expand=True)
-
+        
         self.tree = ttk.Treeview(self.frame)
         self.tree.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-
+        
         self.scrollbar = ttk.Scrollbar(self.frame, orient="vertical", command=self.tree.yview)
         self.scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
+        
         self.tree.configure(yscrollcommand=self.scrollbar.set)
         self.tree.heading('#0', text='Folder Structure', anchor='w')
-
-        browse_button = tk.Button(root, text="Browse Folder", command=self.browse_folder)
+        
+        browse_button = tk.Button(self.frame, text="Browse Folder", command=self.browse_folder)
         browse_button.pack()
-
-        copy_selected_button = tk.Button(root, text="Copy Only This Folder Structure to Clipboard", command=self.copy_selected_folder_structure)
+        
+        copy_selected_button = tk.Button(self.frame, text="Copy Only This Folder Structure to Clipboard", command=self.copy_selected_folder_structure)
         copy_selected_button.pack()
-
-        copy_full_button = tk.Button(root, text="Copy Full Folder Structure to Clipboard", command=self.copy_full_folder_structure)
+        
+        copy_full_button = tk.Button(self.frame, text="Copy Full Folder Structure to Clipboard", command=self.copy_full_folder_structure)
         copy_full_button.pack()
-
-        self.path_label = tk.Label(root, text="Selected Path: ")
+        
+        self.path_label = tk.Label(self.frame, text="Selected Path: ")
         self.path_label.pack(fill=tk.X)
-
+        
         self.tree.bind('<<TreeviewSelect>>', self.on_tree_select)
 
     def browse_folder(self):

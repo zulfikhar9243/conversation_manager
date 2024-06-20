@@ -124,16 +124,16 @@ class ConversationManager:
 
 # GUI Application
 class ConversationApp:
-    def __init__(self, root):
+    def __init__(self, parent):
         self.manager = ConversationManager()
         
-        self.root = root
-        self.root.title("Conversation Manager")
+        self.frame = ttk.Frame(parent)
+        self.frame.pack(expand=True, fill='both')
         
         self.create_widgets()
     
     def create_widgets(self):
-        frame = ttk.Frame(self.root, padding="10")
+        frame = ttk.Frame(self.frame, padding="10")
         frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Conversation ID
@@ -235,7 +235,7 @@ class ConversationApp:
                     messagebox.showerror("Error", "File content is not in the expected format.")
             else:
                 messagebox.showwarning("Not Found", f"Conversation file {file_path} not found.")
-    
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = ConversationApp(root)
